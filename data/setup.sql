@@ -1,5 +1,7 @@
 create schema if not exists findnearbyplaces;
 
+drop table if exists findnearbyplaces.review_photo;
+drop table if exists findnearbyplaces.place_photo;
 drop table if exists findnearbyplaces.reviews;
 drop table if exists findnearbyplaces.locations;
 drop table if exists findnearbyplaces.reviews;
