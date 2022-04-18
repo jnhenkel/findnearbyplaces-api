@@ -10,6 +10,7 @@ app.use(express.json());
 app.use(cors());
 
 app.get('/', (req,res) => {
+    console.log(navigator);
     res.status(200).json({done: true, message: 'This is the backend for findnearbyplaces'});
 });
 
