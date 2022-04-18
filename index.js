@@ -13,6 +13,7 @@ app.get('/', (req,res) => {
     console.log(navigator);
     res.status(200).json({done: true, message: 'This is the backend for findnearbyplaces'});
 });
+ 
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
