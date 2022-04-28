@@ -1,6 +1,6 @@
 const express = require('express');
 var cors = require('cors');
-import store from './data/store';
+const store = require('./data/store');
 
 const app = express();
 
@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(cors());
 
 app.get('/', (req,res) => {
-    console.log(navigator);
+    console.log(navigator.geolocation);
     res.status(200).json({done: true, message: 'This is the backend for findnearbyplaces 1'});
 });
  
