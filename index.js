@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(cors());
 
 app.get('/', (req,res) => {
-    res.status(200).json({done: true, message: 'This is the backend for findnearbyplaces 1'});
+    res.status(200).json({done: true, message: 'This is the backend for findnearbyplaces'});
 });
  
 app.get('/search/:search_term/:user_location/:radius_filter/:maximum_results_to_return/:category_filter/:sort', (req, res) => {
