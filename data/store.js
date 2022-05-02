@@ -61,7 +61,7 @@ let store = {
     },
 
     login: (email, password) => {
-        return pool.query('SELECT id, name, email, password FROM findnearbyplaces.customer WHERE email = $1', [email])
+        return pool.query('SELECT id, email, password FROM findnearbyplaces.customer WHERE email = $1', [email])
             .then(x => {
                 if (x.rows.length == 1) {
                     let valid = bcrypt.compareSync(password, x.rows[0].password);

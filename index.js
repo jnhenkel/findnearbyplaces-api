@@ -42,7 +42,7 @@ passport.use(
             })
             .catch(e => {
                 console.log(e);
-                cb('Somethign went wrong!');
+                cb('Something went wrong!');
             });
 
     }));
