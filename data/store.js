@@ -22,24 +22,37 @@ let store = {
                     join findnearbyplaces.reviews r on r.location_id = l.id
                     join findnearbyplaces.place_photo pp on pp.location_id = l.id
                     join findnearbyplaces.photo p on p.id = pp.photo_id
-                    where l.name like '%${search_term}%'  
+                    where l.name like '%$1%'  
                     `;
         if (category_filter) {
-            query += `or c.name like '%${category_filter}%`;
+            query += ` or c.name like '%$5%'`;
         } else {
-            query += `or c.name like '%${search_term}%'`;
+            query += ` or c.name like '%$1%'`;
         }
 
-        if (radius_filter) {
-            query += `and location <= ${user_location} + ${radius_filter}
-                        and location >= ${user_location} - ${radius_filter}`;
-        } else {
-            query += `and location like ${user_location}`;
-        }
+        //if (radius_filter) {
+        //    query += ` and CONCAT(l.latitude,',', l.longitude) <= $2 + $3 and location >= $2 - $3`;
+        //} else {
+        //    query += ` and CONCAT(l.latitude,',', l.longitude) like $2`;
+        //}
 
         if (maximum_results_to_return) {
-            query += `limit ${maximum_results_to_return}`;
+            query += ` limit $4`;
         }
+
+        return pool.query(query,[search_term, user_location, radius_filter, maximum_results_to_return, category_filter, sort])
+        .then(x => {
+            console.log('from store: ', x);
+            if (x.rows.length >0) {
+                return {done: true, result: x.rows};
+            } else {
+                return {done: false, result: x.rows};
+            }
+        })
+        .catch(e => {
+            console.log(e);
+            alert('something went wrong getting search');
+        })
     }
 }
 

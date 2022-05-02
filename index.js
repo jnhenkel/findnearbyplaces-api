@@ -1,6 +1,6 @@
 const express = require('express');
 var cors = require('cors');
-const store = require('./data/store');
+const {store} = require('./data/store');
 
 const app = express();
 
@@ -22,6 +22,14 @@ app.get('/search/:search_term/:user_location/:radius_filter/:maximum_results_to_
     let category_filter = req.params.category_filter;
     let sort = req.params.sort;
     store.getSearch(search_term, user_location, radius_filter, maximum_results_to_return, category_filter, sort)
+    .then(x => {
+        console.log(x);
+        if (x.done) {
+            res.status(200).json(x);
+        } else {
+            res.status(404).json(x);
+        }
+    })
 })
 
 app.listen(port, () => {
