@@ -53,7 +53,28 @@ let store = {
             console.log(e);
             alert('something went wrong getting search');
         })
-    }
+    },
+
+    addCustomer: (email, password) => {
+        const hash = bcrypt.hashSync(password, 10);
+        return pool.query('INSERT INTO findnearbyplaces.customer (email, password) VALUES ($1, $2)', [email, hash]);
+    },
+
+    login: (email, password) => {
+        return pool.query('SELECT id, name, email, password FROM findnearbyplaces.customer WHERE email = $1', [email])
+            .then(x => {
+                if (x.rows.length == 1) {
+                    let valid = bcrypt.compareSync(password, x.rows[0].password);
+                    if (valid) {
+                        return { valid: true, user: {id: x.rows[0].id, username: x.rows[0].email}};
+                    } else {
+                        return { valid: false, message: 'Credentials are not valid.' };
+                    }
+                } else {
+                    return { valid: false, message: 'Email not found.' };
+                }
+            });
+    },
 }
 
 module.exports = {store};
