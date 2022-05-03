@@ -23,8 +23,8 @@ create table findnearbyplaces.customer (
 create table findnearbyplaces.locations (
 	id serial8 primary key,
 	name varchar(256) not null,
-	latitude int8 not null,
-	longitude int8 not null,
+	latitude double precision not null,
+	longitude double precision not null,
 	description varchar(512),
 	category_id int2 not null,
 	customer_id int4 references findnearbyplaces.customer(id)

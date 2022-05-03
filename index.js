@@ -117,6 +117,26 @@ app.get('/login/failed', (request, response) => {
     response.status(401).json({ done: false, message: 'The credentials are not valid.' });
 });
 
+app.post('/place', (req, res) => {
+    let name = req.body.name;
+    let category_id = req.body.category_id;
+    let latitude = req.body.latitude;
+    let longitude = req.body.longitude;
+    let description = req.body.description;
+    store.postLocation(name,category_id,latitude,longitude,description)
+    .then(x => {
+        return store.getLocationId(name)
+    })
+    .then(x => {
+        res.status(200).json({done: true, id: x.rows[0].id, message: 'Location added successfully'});
+    })
+    .catch(e => {
+        console.log(e);
+        console.log('Something went wrong adding location');
+        res.status(500).json({ done: false, message: 'Location not added due to an error.' });
+    })
+})
+
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
 });

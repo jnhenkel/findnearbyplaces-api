@@ -75,6 +75,14 @@ let store = {
                 }
             });
     },
+
+    postLocation: (name,category_id,latitude,longitude,description) => {
+        return pool.query('INSERT INTO findnearbyplaces.locations (name,category_id,latitude,longitude,description) VALUES ($1, $2, $3, $4, $5)', [name,category_id,latitude,longitude,description])
+    },
+
+    getLocationId: (name) => {
+        return pool.query('SELECT l.id FROM findnearbyplaces.locations l WHERE name LIKE $1', [name])
+    }
 }
 
 module.exports = {store};
