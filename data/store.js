@@ -82,6 +82,14 @@ let store = {
 
     getLocationId: (name) => {
         return pool.query('SELECT l.id FROM findnearbyplaces.locations l WHERE name LIKE $1', [name])
+    },
+
+    postCategory: (name) => {
+        return pool.query('INSERT INTO findnearbyplaces.category (name) VALUES ($1)', [name])
+    },
+
+    getCategoryId: (name) => {
+        return pool.query('SELECT c.id FROM findnearbyplaces.category c WHERE name LIKE $1', [name])
     }
 }
 

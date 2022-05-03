@@ -5,6 +5,7 @@ var LocalStrategy = require('passport-local');
 var session = require('express-session');
 var SQLiteStore = require('connect-sqlite3')(session);
 const {store} = require('./data/store');
+const req = require('express/lib/request');
 
 const app = express();
 
@@ -132,8 +133,23 @@ app.post('/place', (req, res) => {
     })
     .catch(e => {
         console.log(e);
-        console.log('Something went wrong adding location');
         res.status(500).json({ done: false, message: 'Location not added due to an error.' });
+    })
+});
+
+app.post('/category', (req, res) => {
+    let name = req.body.name;
+    store.postCategory(name)
+    .then(x => {
+        return store.getCategoryId(name)
+    })
+    .then(x => {
+        console.log('from second then: ', x);
+        res.status(200).json({done: true, id: x.rows[0].id, message: 'Category added successfully'});
+    })
+    .catch(e => {
+        console.log(e);
+        res.status(500).json({ done: false, message: 'Category not added due to an error.' });
     })
 })
 
