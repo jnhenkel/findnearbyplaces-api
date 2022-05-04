@@ -106,6 +106,14 @@ let store = {
 
     postReviewPhoto: (review_id, photo_id) => {
         return pool.query('INSERT INTO findnearbyplaces.review_photo (review_id, photo_id) VALUES ($1, $2)', [review_id, photo_id])
+    },
+
+    postReview: (location_id, text, rating) => {
+        return pool.query('INSERT INTO findnearbyplaces.reviews (location_id, text, rating) VALUES ($1, $2, $3)', [location_id, text, rating])
+    },
+
+    getReviewId: (location_id, text, rating) => {
+        return pool.query('SELECT r.id FROM findnearbyplaces.reviews r WHERE location_id = $1 AND text = $2 AND rating = $3', [location_id, text, rating])
     }
 }
 

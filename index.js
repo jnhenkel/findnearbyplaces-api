@@ -6,6 +6,7 @@ var session = require('express-session');
 var SQLiteStore = require('connect-sqlite3')(session);
 const {store} = require('./data/store');
 const req = require('express/lib/request');
+const { Pool } = require('pg/lib');
 
 const app = express();
 
@@ -179,6 +180,24 @@ app.post('/photo', (req, res) => {
     .catch(e => {
         console.log(e);
         res.status(500).json({ done: false, message: 'Photo not added due to an error.' });
+    })
+});
+
+//5
+app.post('/review', (req, res) => {
+    let location_id = req.body.place_id;
+    let text = req.body.comment;
+    let rating = req.body.rating;
+    store.postReview(location_id, text, rating)
+    .then(x => {
+        return store.getReviewId(location_id, text, rating)
+    })
+    .then(x => {
+        res.status(200).json({done: true, id: x.rows[0].id, message: 'Review added successfully'});
+    })
+    .catch(e => {
+        console.log(e);
+        res.status(500).json({ done: false, message: 'Review not added due to an error.' });
     })
 })
 
