@@ -114,6 +114,33 @@ let store = {
 
     getReviewId: (location_id, text, rating) => {
         return pool.query('SELECT r.id FROM findnearbyplaces.reviews r WHERE location_id = $1 AND text = $2 AND rating = $3', [location_id, text, rating])
+    },
+
+    putPlace: (place_id, name, category_id, latitude, longitude, description) => {
+        let result = [place_id];
+        let query = 'UPDATE findnearbyplaces.locations SET';
+        if (name) {
+            query += ' name = $2';
+            result.push(name);
+        }
+        if (category_id) {
+            query += ', category_id = $3';
+            result.push(category_id);
+        }
+        if (latitude) {
+            query += ', latitude = $4';
+            result.push(latitude);
+        }
+        if (longitude) {
+            query += ', longitude = $5';
+            result.push(longitude);
+        }
+        if (description) {
+            query += ', description = $6';
+            result.push(description);
+        }
+        query += ' WHERE id = $1';
+        return pool.query(query, result)
     }
 }
 

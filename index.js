@@ -199,6 +199,24 @@ app.post('/review', (req, res) => {
         console.log(e);
         res.status(500).json({ done: false, message: 'Review not added due to an error.' });
     })
+});
+
+//6
+app.put('/place', (req, res) => {
+    let place_id = req.body.place_id;
+    let name = req.body.name;
+    let category_id = req.body.category_id;
+    let latitude = req.body.latitude;
+    let longitude = req.body.longitude;
+    let description = req.body.description;
+    store.putPlace(place_id, name, category_id, latitude, longitude, description)
+    .then(x => {
+        res.status(200).json({done: true, message: 'Location updated successfully'});
+    })
+    .catch(e => {
+        console.log(e);
+        res.status(500).json({ done: false, message: 'Location not updated due to an error.' });
+    })
 })
 
 app.listen(port, () => {
