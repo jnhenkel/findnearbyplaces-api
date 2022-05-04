@@ -90,6 +90,22 @@ let store = {
 
     getCategoryId: (name) => {
         return pool.query('SELECT c.id FROM findnearbyplaces.category c WHERE name LIKE $1', [name])
+    },
+
+    postPhoto: (photo) => {
+        return pool.query('INSERT INTO findnearbyplaces.photo (file) VALUES ($1)', [photo])
+    },
+
+    getPhotoId: (photo) => {
+        return pool.query('SELECT p.id FROM findnearbyplaces.photo p WHERE file = $1', [photo])
+    },
+
+    postPlacePhoto: (place_id, photo_id) => {
+        return pool.query('INSERT INTO findnearbyplaces.place_photo (location_id, photo_id) VALUES ($1, $2)', [place_id, photo_id])
+    },
+
+    postReviewPhoto: (review_id, photo_id) => {
+        return pool.query('INSERT INTO findnearbyplaces.review_photo (review_id, photo_id) VALUES ($1, $2)', [review_id, photo_id])
     }
 }
 

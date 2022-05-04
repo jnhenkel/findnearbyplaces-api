@@ -72,6 +72,7 @@ app.get('/', (req,res) => {
     res.status(200).json({done: true, message: 'This is the backend for findnearbyplaces'});
 });
  
+//1
 app.get('/search/:search_term/:user_location/:radius_filter/:maximum_results_to_return/:category_filter/:sort', (req, res) => {
     let search_term = req.params.search_term;
     let user_location = req.params.user_location;
@@ -90,7 +91,7 @@ app.get('/search/:search_term/:user_location/:radius_filter/:maximum_results_to_
     })
 })
 
-
+//2
 app.post('/register', (req, res) => {
     let email = req.body.email;
     let password = req.body.password; /* store will handle encryption */
@@ -118,6 +119,7 @@ app.get('/login/failed', (request, response) => {
     response.status(401).json({ done: false, message: 'The credentials are not valid.' });
 });
 
+//3
 app.post('/place', (req, res) => {
     let name = req.body.name;
     let category_id = req.body.category_id;
@@ -137,6 +139,7 @@ app.post('/place', (req, res) => {
     })
 });
 
+//3.1
 app.post('/category', (req, res) => {
     let name = req.body.name;
     store.postCategory(name)
@@ -144,12 +147,38 @@ app.post('/category', (req, res) => {
         return store.getCategoryId(name)
     })
     .then(x => {
-        console.log('from second then: ', x);
         res.status(200).json({done: true, id: x.rows[0].id, message: 'Category added successfully'});
     })
     .catch(e => {
         console.log(e);
         res.status(500).json({ done: false, message: 'Category not added due to an error.' });
+    })
+});
+
+//4
+app.post('/photo', (req, res) => {
+    let photo = req.body.photo;
+    let place_id = req.body.place_id;
+    let review_id = req.body.review_id;
+    var photo_id;
+    store.postPhoto(photo)
+    .then(x => {
+        return store.getPhotoId(photo)
+    })
+    .then(x => {
+        photo_id = x.rows[0].id;
+        if (place_id) {
+            return store.postPlacePhoto(place_id, photo_id)
+        } else if (review_id) {
+            return store.postReviewPhoto(review_id, photo_id)
+        }
+    })
+    .then(x => {
+        res.status(200).json({done: true, id: photo_id, message: 'Photo added successfully'});
+    })
+    .catch(e => {
+        console.log(e);
+        res.status(500).json({ done: false, message: 'Photo not added due to an error.' });
     })
 })
 
