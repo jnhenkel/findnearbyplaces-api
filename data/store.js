@@ -120,26 +120,60 @@ let store = {
         let result = [place_id];
         let query = 'UPDATE findnearbyplaces.locations SET';
         if (name) {
+            if (result.length > 1) {
+                query += ',';
+            }
             query += ' name = $2';
             result.push(name);
         }
         if (category_id) {
-            query += ', category_id = $3';
+            if (result.length > 1) {
+                query += ',';
+            }
+            query += ' category_id = $3';
             result.push(category_id);
         }
         if (latitude) {
-            query += ', latitude = $4';
+            if (result.length > 1) {
+                query += ',';
+            }
+            query += ' latitude = $4';
             result.push(latitude);
         }
         if (longitude) {
-            query += ', longitude = $5';
+            if (result.length > 1) {
+                query += ',';
+            }
+            query += ' longitude = $5';
             result.push(longitude);
         }
         if (description) {
-            query += ', description = $6';
+            if (result.length > 1) {
+                query += ',';
+            }
+            query += ' description = $6';
             result.push(description);
         }
         query += ' WHERE id = $1';
+        return pool.query(query, result)
+    },
+
+    putReview: (review_id, text, rating) => {
+        let result = [review_id];
+        let query = 'UPDATE findnearbyplaces.reviews SET';
+        if (text) {
+            query += ' text = $2';
+            result.push(text);
+        }
+        if (rating) {
+            if (result.length > 1) {
+                query += ',';
+            }
+            query += ' rating = $3';
+            result.push(rating);
+        }
+        query += ' WHERE id = $1';
+        console.log(query);
         return pool.query(query, result)
     }
 }

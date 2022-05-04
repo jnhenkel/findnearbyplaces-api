@@ -217,6 +217,21 @@ app.put('/place', (req, res) => {
         console.log(e);
         res.status(500).json({ done: false, message: 'Location not updated due to an error.' });
     })
+});
+
+//7
+app.put('/review', (req, res) => {
+    let review_id = req.body.review_id;
+    let text = req.body.comment;
+    let rating = req.body.rating;
+    store.putReview(review_id, text, rating)
+    .then(x => {
+        res.status(200).json({done: true, message: 'Review updated successfully'});
+    })
+    .catch(e => {
+        console.log(e);
+        res.status(500).json({ done: false, message: 'Review not updated due to an error.' });
+    })
 })
 
 app.listen(port, () => {
