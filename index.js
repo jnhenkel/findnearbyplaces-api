@@ -287,6 +287,13 @@ app.delete('/photo', (req, res) => {
     })
 });
 
+//listen
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
+});
+
+//logout
+app.post('/logout', (req,res) => {
+    req.logout();
+    res.redirect('/');
 });
