@@ -232,6 +232,20 @@ app.put('/review', (req, res) => {
         console.log(e);
         res.status(500).json({ done: false, message: 'Review not updated due to an error.' });
     })
+});
+
+//8
+app.put('/photo', (req, res) => {
+    let photo_id = req.body.photo_id;
+    let file = req.body.photo;
+    store.putPhoto(photo_id, file)
+    .then(x => {
+        res.status(200).json({done: true, message: 'Photo updated successfully'});
+    })
+    .catch(e => {
+        console.log(e);
+        res.status(500).json({ done: false, message: 'Photo not updated due to an error.' });
+    })
 })
 
 app.listen(port, () => {

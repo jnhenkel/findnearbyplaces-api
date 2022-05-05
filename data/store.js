@@ -175,6 +175,10 @@ let store = {
         query += ' WHERE id = $1';
         console.log(query);
         return pool.query(query, result)
+    },
+
+    putPhoto: (photo_id, file) => {
+        return pool.query('UPDATE findnearbyplaces.photo SET file = $2 WHERE id = $1', [photo_id, file])
     }
 }
 
