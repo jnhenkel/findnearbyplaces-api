@@ -70,7 +70,7 @@ passport.deserializeUser(function (user, cb) {
 });
 
 app.get('/', (req,res) => {
-    res.status(200).json({done: true, message: 'This is the backend for findnearbyplaces'});
+    res.status(200).json({done: true, message: 'This is the backend for findnearbyplaces '});
 });
  
 //1
