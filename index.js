@@ -246,7 +246,46 @@ app.put('/photo', (req, res) => {
         console.log(e);
         res.status(500).json({ done: false, message: 'Photo not updated due to an error.' });
     })
-})
+});
+
+//9
+app.delete('/place', (req, res) => {
+    let place_id = req.body.place_id;
+    store.deletePlace(place_id)
+    .then(x => {
+        res.status(200).json({done: true, message: 'Place deleted successfully'});
+    })
+    .catch(e => {
+        console.log(e);
+        res.status(500).json({ done: false, message: 'Place not deleted due to an error.' });
+    })
+});
+
+//10
+app.delete('/review', (req, res) => {
+    let review_id = req.body.review_id;
+    store.deleteReview(review_id)
+    .then(x => {
+        res.status(200).json({done: true, message: 'Review deleted successfully'});
+    })
+    .catch(e => {
+        console.log(e);
+        res.status(500).json({ done: false, message: 'Review not deleted due to an error.' });
+    })
+});
+
+//11
+app.delete('/photo', (req, res) => {
+    let photo_id = req.body.photo_id;
+    store.deletePhoto(photo_id)
+    .then(x => {
+        res.status(200).json({done: true, message: 'Photo deleted successfully'});
+    })
+    .catch(e => {
+        console.log(e);
+        res.status(500).json({ done: false, message: 'Photo not deleted due to an error.' });
+    })
+});
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);

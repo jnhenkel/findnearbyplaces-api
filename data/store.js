@@ -179,6 +179,18 @@ let store = {
 
     putPhoto: (photo_id, file) => {
         return pool.query('UPDATE findnearbyplaces.photo SET file = $2 WHERE id = $1', [photo_id, file])
+    },
+
+    deletePlace: (place_id) => {
+        return pool.query('DELETE FROM findnearbyplaces.locations WHERE id = $1', [place_id])
+    },
+
+    deleteReview: (review_id) => {
+        return pool.query('DELETE FROM findnearbyplaces.reviews WHERE id = $1', [review_id])
+    },
+
+    deletePhoto: (photo_id) => {
+        return pool.query('DELETE FROM findnearbyplaces.photo WHERE id = $1', [photo_id])
     }
 }
 
