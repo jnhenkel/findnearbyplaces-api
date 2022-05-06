@@ -51,7 +51,6 @@ let store = {
         })
         .catch(e => {
             console.log(e);
-            alert('something went wrong getting search');
         })
     },
 
