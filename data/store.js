@@ -40,7 +40,7 @@ let store = {
             query += ` limit $4`;
         }
 
-        return pool.query(query,[search_term, user_location, radius_filter, maximum_results_to_return, category_filter, sort])
+        pool.query(query,[search_term, user_location, radius_filter, maximum_results_to_return, category_filter, sort])
         .then(x => {
             console.log('from store: ', x);
             if (x.rows.length >0) {
