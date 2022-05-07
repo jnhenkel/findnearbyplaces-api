@@ -22,12 +22,12 @@ let store = {
                     join findnearbyplaces.reviews r on r.location_id = l.id
                     join findnearbyplaces.place_photo pp on pp.location_id = l.id
                     join findnearbyplaces.photo p on p.id = pp.photo_id
-                    where l.name like '%$1%'  
+                    where l.name like CONCAT('%',$1,'%')  
                     `;
         if (category_filter) {
-            query += ` or c.name like '%$5%'`;
+            query += ` or c.name like CONCAT('%',$5,'%')`;
         } else {
-            query += ` or c.name like '%$1%'`;
+            query += ` or c.name like CONCAT('%',$1,'%')`;
         }
 
         //if (radius_filter) {
