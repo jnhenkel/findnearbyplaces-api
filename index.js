@@ -84,7 +84,7 @@ app.get('/search/:search_term/:user_location/:radius_filter/:maximum_results_to_
     store.getSearch(search_term, user_location, radius_filter, maximum_results_to_return, category_filter, sort)
     .then(x => {
         console.log(x);
-        if (x.done) {
+        if (x) {
             res.status(200).json(x);
         } else {
             res.status(404).json(x);

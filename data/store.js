@@ -30,11 +30,11 @@ let store = {
             query += ` or c.name like CONCAT('%',$1,'%')`;
         }
 
-        //if (radius_filter) {
-        //    query += ` and CONCAT(l.latitude,',', l.longitude) <= $2 + $3 and location >= $2 - $3`;
-        //} else {
-        //    query += ` and CONCAT(l.latitude,',', l.longitude) like $2`;
-        //}
+        if (radius_filter) {
+            query += ` and CONCAT(l.latitude,',', l.longitude) <= $2 + $3 and location >= $2 - $3`;
+        } else {
+            query += ` and CONCAT(l.latitude,',', l.longitude) like $2`;
+        }
 
         if (maximum_results_to_return) {
             query += ` limit $4`;
